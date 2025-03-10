@@ -5,6 +5,9 @@ import DeliveryCalc.Traffic;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import static DeliveryCalc.Dimensions.*;
+import static DeliveryCalc.Fragile.*;
+import static DeliveryCalc.Traffic.*;
 
 
 public class DeliveryTest {
@@ -24,11 +27,11 @@ public class DeliveryTest {
     public Object[][] testDataMethod() {
         return new Object[][]{
 
-                {11, Dimensions.LARGE, Fragile.YES, Traffic.MEDIUM, 840},
-                {3, Dimensions.SMALL, Fragile.YES, Traffic.STANDARD, 500},
-                {0.1, Dimensions.SMALL, Fragile.NO, Traffic.MEDIUM, 400},
-                {3, Dimensions.LARGE, Fragile.NO, Traffic.HIGHEST, 480},
-                {31, Dimensions.LARGE, Fragile.NO, Traffic.STANDARD, 500}
+                {11, LARGE, YES, MEDIUM, 840},
+                {3, SMALL, YES, STANDARD, 500},
+                {0.1, SMALL, NO, MEDIUM, 400},
+                {3, LARGE, NO, HIGHEST, 480},
+                {31, LARGE, NO, STANDARD, 500}
 
         };
     }
@@ -36,7 +39,7 @@ public class DeliveryTest {
     @Test(groups ={"negative"}, expectedExceptions = ArithmeticException.class, expectedExceptionsMessageRegExp = "Fragile package can't be delivered so far > 30 km" )
 
     public void moreThan30FragileTest(){
-        Delivery delivery = new Delivery(31, Dimensions.LARGE, Fragile.YES, Traffic.STANDARD);
+        Delivery delivery = new Delivery(31, LARGE, YES, STANDARD);
 
         delivery.calculateDelivery();
 
@@ -45,7 +48,7 @@ public class DeliveryTest {
     @Test(groups ={"negative"}, expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "It can't be negative value or 0")
     public void negativeDistanceTest(){
 
-        Delivery delivery = new Delivery(-1, Dimensions.LARGE, Fragile.YES, Traffic.STANDARD);
+        Delivery delivery = new Delivery(-1, LARGE, YES, STANDARD);
 
         delivery.calculateDelivery();
 
